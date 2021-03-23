@@ -1,0 +1,16 @@
+{
+  "name": "StreamingScraping",
+  "version": "1.0.0",
+  "description": "Agent site web scraping for Streaming AC",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE src/index.js"
+  },
+  "author": "SalasDev",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "exceljs": "^4.2.1",
+    "puppeteer": "^8.0.0"
+  }
+}
