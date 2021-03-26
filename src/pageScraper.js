@@ -44,7 +44,7 @@ const scraperObject = {
         }
         return players;
     },
-    async scraper({browser, username, password, to_ignore, requirements}) {
+    async scraper({browser, username, password, filter, requirements}) {
         const agentsResult = {};
         const page = await browser.newPage();
 
@@ -70,10 +70,17 @@ const scraperObject = {
             select => select.map(item => {
                 return {text: item.text, value: item.value};
             })
-        )).filter(
-            item => item.text.toLowerCase() !== username.toLowerCase() 
-                && !(to_ignore.includes(item.text))
-        );
+        )).filter(item => {
+            let flag;
+            if (!filter.action || filter.action === 'NONE') {
+                flag = true;
+            } else if (filter.action === 'ONLY') {
+                flag = filter.agents.includes(item.text);
+            } else if (filter.action === 'REJECT') {
+                flag = !filter.agents.includes(item.text);
+            }
+            return item.text.toLowerCase() !== username.toLowerCase() && flag;
+        });
 
         for (const agent of agents){
             await frame.select('select#ddlAgentMenu', agent.value);

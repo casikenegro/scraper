@@ -1,8 +1,9 @@
 const pageScraper = require('./pageScraper');
 
-async function scrapeAll(browserInstance, to_ignore, requirements) {
+async function scrapeAll(browserInstance, filter, requirements) {
     const {AG_USERNAME: username, AG_PASSWORD: password} = process.env;
-    console.log('Agentes a ignorar: ', to_ignore.join(', ') || 'NO IGNORAR...');
+    console.log('Agentes: ', filter.agents.join(', ') || 'NO HAY AGENTES...');
+    console.log('Accion: ', filter.action || 'NONE');
     let browser;
     try {
         browser = await browserInstance;
@@ -10,7 +11,7 @@ async function scrapeAll(browserInstance, to_ignore, requirements) {
             browser,
             username,
             password,
-            to_ignore,
+            filter,
             requirements
         });
         browser.close();
@@ -22,4 +23,4 @@ async function scrapeAll(browserInstance, to_ignore, requirements) {
     }
 }
 
-module.exports = (browserInstance, to_ignore, requirements) => scrapeAll(browserInstance, to_ignore, requirements);
+module.exports = (...args) => scrapeAll(...args);

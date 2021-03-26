@@ -10,7 +10,9 @@ para configurar el entorno debe crear un archivo .env en la raiz del proyecto, p
 
 la configuracion de las variables de entorno es la siguiente.
 
-AG_TO_IGNORE: agencias que se desean ignorar separadas por comas.
+AG_FILTER: agencias que se desea seleccionar.
+
+AG_ACTION: accion que tomar el filtro (ONLY, REJECT, NONE)... se puede dejar vacio con NONE por defecto.
 
 AG_REQUIREMENTS: los datos correspondientes que se desean guardar (el orden es el establecido).
 
