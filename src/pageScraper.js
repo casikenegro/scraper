@@ -24,6 +24,7 @@ const scraperObject = {
     },
     async managePlayers(browser, requirements) {
         const page = await browser.newPage();
+        await page.setDefaultNavigationTimeout(120000);
         const players = [];
 
         await page.goto(`${this.url}${this.players}`);
@@ -54,7 +55,7 @@ const scraperObject = {
         await page.click('#login-button');
 
         console.log('Espere un momento, se esta ingresando a la plataforma...')
-        await page.waitForTimeout(10000);
+        await page.waitForTimeout(30000);
 
         const url = `${this.url}${this.menu}`;
 
@@ -67,7 +68,7 @@ const scraperObject = {
         const frame = await page.frames().find(frame => frame.name() === 'topFrame');
 
         const agents = (await frame.$$eval('#ddlAgentMenu > option', 
-            select => select.map(item => {
+            items => items.map(item => {
                 return {text: item.text, value: item.value};
             })
         )).filter(item => {
