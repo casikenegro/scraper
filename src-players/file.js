@@ -34,13 +34,9 @@ const readJson = (name) => {
 };
 const createOrAppend = (data, name) => {
   let payload = [];
-  Object.keys(data).forEach((key) => {
-    data[key].forEach((client) => {
-      payload.push(client);
-    });
-  });
+  payload.push(data);
   if (fs.existsSync(`${name}.json`)) {
-    const players = readJson(undefined, undefined, name);
+    const players = readJson(name);
     console.log(players.length);
     payload = [...players, ...payload];
     console.log(payload.length);

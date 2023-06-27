@@ -1,4 +1,4 @@
-const { saveJson, readJson } = require("./file");
+const { createOrAppend, readJson } = require("./file");
 
 require("dotenv").config();
 
@@ -60,7 +60,6 @@ const scraperObject = {
     await this.htmlOnly(page);
     console.log("html only");
     await page.setDefaultNavigationTimeout(30000);
-    let players = [];
     const init = numbers.init;
     const end = numbers.end;
     const ids = readJson("dataFiltrada-v2");
@@ -70,10 +69,9 @@ const scraperObject = {
       if (!player) continue;
       console.log(index, JSON.stringify(player));
       if (player["Player"] != "") {
-        players.push(player);
+        createOrAppend(player, "data3");
       }
     }
-    return players;
   },
   async scraper({
     browser,
@@ -124,7 +122,6 @@ const scraperObject = {
     });
     const agentsResult = {};
 
-    let players = [];
     for (const agent of agents) {
       await frame.select("select#ddlAgentMenu", agent.value);
       await page.waitForTimeout(100);
@@ -134,10 +131,7 @@ const scraperObject = {
         requirements,
         numbers
       );
-
-      players.push(agentsResult);
     }
-    createOrAppend(players, "data3");
   },
 };
 
